@@ -1,0 +1,17 @@
+@import "tailwindcss";
+/* Prevent white bleed */
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background-color: #000000; /* solid black background */
+  overflow-x: hidden; /* prevent horizontal scroll */
+}
+
+/* Also ensure the main container fills viewport */
+#root {
+  min-height: 100vh;
+  background-color: #000;
+}
