@@ -6,6 +6,7 @@ const navItems = [
   { label: "Drone Status", id: "drone-status", path: "/drone-status" },
   { label: "Sensor Preview", id: "sensor-preview", path: "/sensor-preview" },
   { label: "Analytics", id: "analytics", path: "/analytics" },
+  { label: "Configuration", id: "configuration", path: "/configuration" },
 ];
 
 export default function Header() {
@@ -26,7 +27,7 @@ export default function Header() {
       <div className="flex items-center space-x-3 cursor-pointer select-none">
         <img src="/logo.png" alt="Logo" className="h-10 w-10 object-contain" />
         <span className="text-2xl font-bold tracking-wider">
-          Greenhouse Dashboard
+          PCHELICHKA Dashboard
         </span>
       </div>
 
