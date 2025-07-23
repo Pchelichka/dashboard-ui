@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE } from "@/utils";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import Prism from "prismjs";
 import "prismjs/components/prism-python";
 import "prismjs/themes/prism-tomorrow.css";
-
-const API_BASE = "http://localhost:8000";
 
 interface Config {
   roll_ff: number;
@@ -21,7 +20,7 @@ interface Config {
   code: string;
 }
 
-export default function ConfigurationPage(): JSX.Element {
+export default function ConfigurationPage() {
   const [config, setConfig] = useState<Config | null>(null);
 
   useEffect(() => {
@@ -43,10 +42,14 @@ export default function ConfigurationPage(): JSX.Element {
     if (!config) return;
     setConfig((prev) => {
       if (!prev) return prev;
-      const updated = { ...prev };
+      const updated = {
+        ...prev,
+      };
       if (typeof i === "number" && typeof j === "number") {
+        // @ts-ignore
         updated[key][i][j] = parseFloat(e.target.value);
       } else if (key !== "code") {
+        // @ts-ignore
         updated[key] = parseFloat(e.target.value);
       } else {
         updated[key] = e.target.value;

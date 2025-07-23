@@ -2,15 +2,21 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { API_BASE } from "@/utils";
 
-const API_BASE = "http://localhost:8000";
+interface ImageData {
+  url: string;
+  alt: string;
+  filename: string;
+  result: string;
+}
 
 export default function Dashboard() {
   const [allImages, setAllImages] = useState([]);
   const [nokImages, setNokImages] = useState([]);
 
   // Modal state: null = no preview, or { url, alt }
-  const [previewImage, setPreviewImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState<ImageData | null>(null);
 
   useEffect(() => {
     axios.get(`${API_BASE}/images/nok`).then((res) => setNokImages(res.data));
@@ -19,20 +25,20 @@ export default function Dashboard() {
 
   // Close modal on Escape key press
   useEffect(() => {
-    const handleEsc = (e) => {
+    const handleEsc = (e: KeyboardEvent) => {
       if (e.key === "Escape") setPreviewImage(null);
     };
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
 
-  const ImageGrid = ({ images }) => (
+  const ImageGrid = ({ images }: { images: ImageData[] }) => (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
       {images.map((img) => (
         <Card
           key={img.filename}
           className="bg-gray-900 shadow-xl border border-gray-700 hover:shadow-yellow-400/40 transition-all duration-300 cursor-pointer"
-          onClick={() => setPreviewImage({ url: img.url, alt: img.filename })}
+          onClick={() => setPreviewImage(img)}
         >
           <CardContent className="p-4">
             <img
